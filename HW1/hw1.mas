@@ -5,10 +5,13 @@
     / Prompt the user for values of A, B, and C. Echo these back to the screen
     Input
     Store   A
+    Output
     Input
     Store   B
+    Output
     Input
     Store   C
+    Output
     Load    B
     Store   i / We'll use the value of B to run our first loop. 
 
