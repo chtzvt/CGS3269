@@ -1,0 +1,57 @@
+/ Charlton Trezevant
+/ CGS 3269 - HW 1
+/ Spring 2020
+
+    / Prompt the user for values of A, B, and C. Echo these back to the screen
+    Input
+    Store   A
+    Input
+    Store   B
+    Input
+    Store   C
+    Load    B
+    Store   i / We'll use the value of B to run our first loop. 
+
+/ Repeat the process of adding the variable A to another variable (ABProduct) B times
+/ This is equivalent to A * B = ABProduct
+MultStage1,  Load    A
+    Add     ABProduct / Add the value of A to the variable ABProduct once per iteration
+    Store   ABProduct
+
+    Load i
+    Subt ONE / Decrement iterator
+    Store i 
+
+    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+    Jump Stage1Exit
+    Jump    MultStage1
+
+/ Now use the value of C in our iterator to run our second loop
+Stage1Exit, Load C 
+    Store i
+
+/ Repeat the process of adding the variable ABProduct to another variable (Z) C times
+/ This is equivalent to (AB) * C = Z
+MultStage2,  Load    ABProduct
+    Add     Z / Add the value of ABProduct to the variable Z once per iteration
+    Store   Z  
+
+    Load i
+    Subt ONE / Decrement iterator
+    Store i
+
+    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+    Jump    STOP
+    Jump    MultStage2
+
+STOP,    Load    Z
+    Output / Print the final result
+    Halt 
+
+A,  Dec 0 / First value to multiply
+B,  Dec 0 / Second value to multiply
+C,  Dec 0 / Third value to multiply
+ABProduct,   Dec 0 / Product of first and second values
+Z,   Dec 0 / Holds the final value
+i,  Dec 0 / Used as an iterator in each loop
+ONE,    Dec 1 / CONSTANT value 1
