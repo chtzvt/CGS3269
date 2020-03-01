@@ -1,0 +1,82 @@
+/ Charlton Trezevant
+/ CGS 3269 - HW 2
+/ Spring 2020
+
+    / Prompt the user for values of A, B, and C. Echo these back to the screen
+    Input
+    Store   A
+    Output
+    Input
+    Store   B
+    Output
+    Input
+    Store   C
+    Output
+    Input
+    Store   D
+    Output
+    Load    B
+    Store   i / We'll use the value of B to run our first loop.
+
+/ Repeat the process of adding the variable A to another variable (ABProduct) B times
+/ This is equivalent to A * B = ABProduct
+MultStage1,  Load    A
+    Add     ABProduct / Add the value of A to the variable ABProduct once per iteration
+    Store   ABProduct
+
+    Load i
+    Subt ONE / Decrement iterator
+    Store i
+
+    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+    Jump Stage1Exit
+    Jump    MultStage1
+
+/ Now use the value of C in our iterator to run our second loop
+Stage1Exit, Load D
+    Store i
+
+/ Repeat the process of adding the variable A to another variable (ABProduct) B times
+/ This is equivalent to C * D = CDProduct
+MultStage2,  Load    C
+    Add     CDProduct / Add the value of A to the variable ABProduct once per iteration
+    Store   CDProduct
+
+    Load i
+    Subt ONE / Decrement iterator
+    Store i
+
+    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+    Jump Stage2Exit
+    Jump    MultStage2
+
+
+Stage2Exit, Load ABProduct
+    Store i
+
+/ Multiply the product of AB by the product of CD
+MultStage3,  Load    CDProduct
+    Add     Z / Add the value of ABProduct to the variable Z once per iteration
+    Store   Z
+
+    Load i
+    Subt ONE / Decrement iterator
+    Store i
+
+    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+    Jump    STOP
+    Jump    MultStage3
+
+STOP,    Load    Z
+    Output / Print the final result
+    Halt
+
+A,  Dec 0 / First value to multiply
+B,  Dec 0 / Second value to multiply
+C,  Dec 0 / Third value to multiply
+D,  Dec 0 / Third value to multiply
+ABProduct,   Dec 0 / Product of first and second values
+CDProduct,   Dec 0 / Product of third and fourth values
+Z,   Dec 0 / Holds the final value
+i,  Dec 0 / Used as an iterator in each loop
+ONE,    Dec 1 / CONSTANT value 1
