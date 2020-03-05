@@ -15,61 +15,50 @@
     Input
     Store   D
     Output
-    Load    B
-    Store   i / We'll use the value of B to run our first loop.
 
-/ Repeat the process of adding the variable A to another variable (ABProduct) B times
-/ This is equivalent to A * B = ABProduct
-MultStage1,  Load    A
-    Add     ABProduct / Add the value of A to the variable ABProduct once per iteration
-    Store   ABProduct
-
-    Load i
-    Subt ONE / Decrement iterator
-    Store i
-
-    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
-    Jump Stage1Exit
-    Jump    MultStage1
-
-/ Now use the value of D in our iterator to run our second loop
-Stage1Exit, Load D
-    Store i
-
-/ Repeat the process of adding the variable C to another variable (CDProduct) D times
-/ This is equivalent to C * D = CDProduct
-MultStage2,  Load    C
-    Add     CDProduct / Add the value of A to the variable ABProduct once per iteration
-    Store   CDProduct
-
-    Load i
-    Subt ONE / Decrement iterator
-    Store i
-
-    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
-    Jump Stage2Exit
-    Jump    MultStage2
-
-
-Stage2Exit, Load ABProduct
-    Store i
-
-/ Multiply the product of AB by the product of CD
-MultStage3,  Load    CDProduct
-    Add     Z / Add the value of CDProduct to the variable Z once per iteration
-    Store   Z
-
-    Load i
-    Subt ONE / Decrement iterator
-    Store i
-
-    Skipcond 800 / Continue loop while AC > 0. Otherwise stop
-    Jump    STOP
-    Jump    MultStage3
-
-STOP,    Load    Z
-    Output / Print the final result
+    Load A
+    Store Arg1
+    Load B
+    Store Arg2
+    JnS PrintVariableX
+    Load Arg1
+    Store ABProduct
+    
+    Load C
+    Store Arg1
+    Load D
+    Store Arg2
+    JnS PrintVariableX
+    Load Arg1
+    Store CDProduct
+    
+    Load ABProduct
+    Store Arg1
+    Load CDProduct
+    Store Arg2
+    JnS PrintVariableX
+    Load Arg1
+    Output
     Halt
+
+MULT, HEX 000 / Used for storing return address
+                Load Arg1
+                Store i
+                
+                Load ZERO
+                Store Arg1
+                
+            MultLoop,  Load    Arg2
+                Add     Arg1 / Add the value of CDProduct to the variable Z once per iteration
+                Store   Arg1
+
+                Load i
+                Subt ONE / Decrement iterator
+                Store i
+
+                Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+                JumpI MULT
+                Jump    MultLoop
 
 A,  Dec 0 / First value to multiply
 B,  Dec 0 / Second value to multiply
@@ -77,6 +66,8 @@ C,  Dec 0 / Third value to multiply
 D,  Dec 0 / Third value to multiply
 ABProduct,   Dec 0 / Product of first and second values
 CDProduct,   Dec 0 / Product of third and fourth values
-Z,   Dec 0 / Holds the final value
+Arg1, Dec 0 / First argument to multiplication subroutine
+Arg2, Dec 0 / Second argument to multiplication subroutine
 i,  Dec 0 / Used as an iterator in each loop
 ONE,    Dec 1 / CONSTANT value 1
+ZERO, Dec 0 / CONSTANT value 0
