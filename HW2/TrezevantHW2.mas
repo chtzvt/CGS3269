@@ -2,7 +2,7 @@
 / CGS 3269 - HW 2
 / Spring 2020
 
-    / Prompt the user for values of A, B, and C. Echo these back to the screen
+    / Prompt the user for values of A, B, C, and D. Echo these back to the screen
     Input
     Store   A
     Output
@@ -32,11 +32,11 @@ MultStage1,  Load    A
     Jump Stage1Exit
     Jump    MultStage1
 
-/ Now use the value of C in our iterator to run our second loop
+/ Now use the value of D in our iterator to run our second loop
 Stage1Exit, Load D
     Store i
 
-/ Repeat the process of adding the variable A to another variable (ABProduct) B times
+/ Repeat the process of adding the variable C to another variable (CDProduct) D times
 / This is equivalent to C * D = CDProduct
 MultStage2,  Load    C
     Add     CDProduct / Add the value of A to the variable ABProduct once per iteration
@@ -56,7 +56,7 @@ Stage2Exit, Load ABProduct
 
 / Multiply the product of AB by the product of CD
 MultStage3,  Load    CDProduct
-    Add     Z / Add the value of ABProduct to the variable Z once per iteration
+    Add     Z / Add the value of CDProduct to the variable Z once per iteration
     Store   Z
 
     Load i
