@@ -20,7 +20,7 @@
     Store Arg1
     Load B
     Store Arg2
-    JnS PrintVariableX
+    JnS MULT
     Load Arg1
     Store ABProduct
     
@@ -28,7 +28,7 @@
     Store Arg1
     Load D
     Store Arg2
-    JnS PrintVariableX
+    JnS MULT
     Load Arg1
     Store CDProduct
     
@@ -36,12 +36,12 @@
     Store Arg1
     Load CDProduct
     Store Arg2
-    JnS PrintVariableX
+    JnS MULT
     Load Arg1
     Output
     Halt
 
-MULT, HEX 000 / Used for storing return address
+MULT, HEX 000 / multiplication subroutine
                 Load Arg1
                 Store i
                 
