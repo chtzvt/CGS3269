@@ -4,10 +4,10 @@
 
     / Prompt the user for values of A, B, C, and D. Echo these back to the screen
     Input
-    Store   A
+    Store   Arg1 / Store first and second value directly in subroutine arguments
     Output
     Input
-    Store   B
+    Store   Arg2
     Output
     Input
     Store   C
@@ -16,14 +16,12 @@
     Store   D
     Output
 
-    Load A
-    Store Arg1
-    Load B
-    Store Arg2
+    / First call to multiplication subroutine
     JnS MULT
     Load Arg1
     Store ABProduct
     
+    / Second call to mult subroutine
     Load C
     Store Arg1
     Load D
@@ -32,42 +30,45 @@
     Load Arg1
     Store CDProduct
     
+    / Third call to mult subroutine
     Load ABProduct
     Store Arg1
     Load CDProduct
     Store Arg2
     JnS MULT
+    
+    / Halt program, display final result
     Load Arg1
     Output
     Halt
 
 MULT, HEX 000 / multiplication subroutine
-                Load Arg1
+                Load Arg1 / Store value of Arg1 in iterator
                 Store i
                 
-                Load ZERO
+                Load ZERO / Set value of Arg1 to zero
                 Store Arg1
                 
             MultLoop,  Load    Arg2
-                Add     Arg1 / Add the value of CDProduct to the variable Z once per iteration
+                Add     Arg1 / Add the value of Arg2 to the variable Arg1 once per iteration
                 Store   Arg1
 
                 Load i
                 Subt ONE / Decrement iterator
                 Store i
 
-                Skipcond 800 / Continue loop while AC > 0. Otherwise stop
+                Skipcond 800 / Continue loop while AC > 0. Otherwise leave subroutine
                 JumpI MULT
                 Jump    MultLoop
 
-A,  Dec 0 / First value to multiply
-B,  Dec 0 / Second value to multiply
 C,  Dec 0 / Third value to multiply
-D,  Dec 0 / Third value to multiply
+D,  Dec 0 / Fourth value to multiply
 ABProduct,   Dec 0 / Product of first and second values
 CDProduct,   Dec 0 / Product of third and fourth values
+
 Arg1, Dec 0 / First argument to multiplication subroutine
 Arg2, Dec 0 / Second argument to multiplication subroutine
 i,  Dec 0 / Used as an iterator in each loop
+
 ONE,    Dec 1 / CONSTANT value 1
 ZERO, Dec 0 / CONSTANT value 0
