@@ -18,6 +18,7 @@ int memAddReg;
 int memDatReg;
 int dec = 0;
 
+void emu_main(void);
 void emu_printState(void);
 void emu_printProgMemDump(void);
 void emu_loadParseFile(char *filename);
@@ -33,17 +34,112 @@ void op_output(void);
 void op_skipz(void);
 void op_jump(void);
 
+void print_usage(char *progname);
+
+/////////////// ENTRY ///////////////
+
+int main(int argc, char *argv[]) {
+  if(argc != 2){
+    print_usage(argv[0]);
+    exit(1);
+  }
+  
+  emu_loadParseFile(argv[1]);
+  emu_main();
+}
+
+void print_usage(char *progname){
+  printf("Usage: %s FILENAME\n", progname);
+}
+
 /////////////// EMULATOR INTERNAL ///////////////
 
+void emu_main(){
+        printf("[EMU] Started\n");
+        
+        emu_printState();
+        emu_printProgMemDump();
+        
+        while(dec!=7) {
+                emu_printState();
+                
+                switch(dec) {
+                case 0:
+                        cpu_fetchEx();
+                        break;
+                case 1:
+                        op_load();
+                        break;
+                case 2:
+                        op_add();
+                        break;
+                case 3:
+                        op_store();
+                        break;
+                case 4:
+                        op_sub();
+                        break;
+                case 5:
+                        op_input();
+                        break;
+                case 6:
+                        op_output();
+                        break;
+                case 8:
+                        op_jump();
+                        break;
+                case 9:
+                        op_skipz();
+                        break;
+                }
+        }
+        
+        printf("[EMU] Halted.\n[EMU] FINAL STATE");
+        
+        emu_printState();
+        emu_printProgMemDump();
+}
+
 void emu_loadParseFile(char *filename){
-  
-  emu_printProgMemDump();
+        FILE *file;
+        char cursor;
+
+        printf("[INFO] Loading input file \'%s\'\n", filename);
+
+        file = fopen(filename, "r");
+
+        if(!file) {
+                printf("[ERROR] Couldn't access \'%s\'\n", filename);
+                exit(1);
+        }
+
+        int i = 0;
+
+        while ((cursor = getc(file)) != EOF) {
+                cursor-='0';
+
+                if(cursor<0||cursor>9) {
+                        printf("[ERROR] Couldn't parse invalid input: %c\n", cursor);
+                        continue;
+                }
+
+                if(i%2==0)
+                        progMem[pc+i/2].opCode=cursor;
+                else
+                        progMem[pc+i/2].deviceOrAddress=cursor;
+
+                i++;
+        }
+
+        fclose(file);
+
+        printf("[INFO] Loading completed.\n");
 }
 
 void emu_printState() {
         int i;
 
-        printf("pc:%d acc:%d dec:%d mar:%d mdr:%d dm:[", pc, acc, dec, memAddReg, memDatReg);
+        printf("[EMU] Memory contents = pc:%d acc:%d dec:%d mar:%d mdr:%d dm:[", pc, acc, dec, memAddReg, memDatReg);
 
         for (i = 0; i < MAXMEMORYSIZE; i++) {
                 printf("%d", datMem[i]);
@@ -58,33 +154,33 @@ void emu_printState() {
 void emu_printProgMemDump() {
         int i;
 
-        printf("--- program memory dump ---\nindex | opcode device/address");
+        printf("[EMU] --- Program Memory Dump ---\n[EMU]\tindex | opcode device/address");
 
         for (i = 0; i < MAXPROGRAMSIZE; i++) {
 
                 if(progMem[i].opCode == 0)
                         break;
 
-                printf("%d | %d %d\n", i, progMem[i].opCode, progMem[i].deviceOrAddress);
+                printf("[EMU]\t%d | %d %d\n", i, progMem[i].opCode, progMem[i].deviceOrAddress);
         }
 
-        printf("--- program memory dump ---\n");
+        printf("[EMU] --- Program Memory Dump ---\n");
 }
 
 
-/////////////// FETCH/EXECUTE CYCLE ///////////////
+/////////////// FETCH/EXECUTE ///////////////
 
 void cpu_fetchEx() {
-  memAddReg=pc;
-  ++pc;
+        memAddReg=pc;
+        ++pc;
 
-  memDatReg = progMem[memAddReg].deviceOrAddress;
-  insReg.deviceOrAddress=memDatReg;
+        memDatReg = progMem[memAddReg].deviceOrAddress;
+        insReg.deviceOrAddress=memDatReg;
 
-  memDatReg = progMem[memAddReg].opCode;
-  insReg.opCode=memDatReg;
+        memDatReg = progMem[memAddReg].opCode;
+        insReg.opCode=memDatReg;
 
-  dec = insReg.opCode;
+        dec = insReg.opCode;
 }
 
 /////////////// INSTRUCTIONS ///////////////
@@ -124,7 +220,7 @@ void op_input(){
 }
 
 void op_output(){
-        printf("[OUTPUT] Acc: %d\n",acc);
+        printf("[OUTPUT] Accumulator = %d\n",acc);
         dec = 0;
 }
 
