@@ -359,7 +359,7 @@ void op_output(){
 
 void op_skipz(){
         if (acc == 0)
-                ++pc;
+            ++pc;
         dec = 0;
 }
 
