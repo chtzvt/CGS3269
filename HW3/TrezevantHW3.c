@@ -76,9 +76,9 @@ int main(int argc, char *argv[]) {
 }
 
 void print_usage(char *progname){
-  
+
         printf("Tiny Machine Emulator (c) 2020 Charlton Trezevant\n\n");
-  
+
         printf("Usage: %s FILENAME\n\n", progname);
 
         printf("Max program size: %d instructions\n", MAXPROGRAMSIZE);
@@ -158,7 +158,9 @@ void emu_main(){
                         break;
                 }
 
-                emu_printState();
+                if(dec != 0)
+                        emu_printState();
+
                 emu_Stats.numCycles++;
         }
 
@@ -363,7 +365,7 @@ void op_output(){
 
 void op_skipz(){
         if (acc == 0)
-            ++pc;
+                ++pc;
         dec = 0;
 }
 
