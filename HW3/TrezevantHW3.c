@@ -277,7 +277,6 @@ void emu_printProgMemDump() {
 void emu_initStats() {
         emu_Stats.numCycles = 0;
         emu_Stats.numFetchex = 0;
-        emu_Stats.totalProgSz = 0;
 
         emu_Stats.numLoad = 0;
         emu_Stats.numStore = 0;
@@ -296,7 +295,7 @@ void emu_printStats(){
 
         int numOpsExecuted = emu_Stats.numCycles - emu_Stats.numFetchex;
 
-        printf("[STATS]\tinstructions executed: %d\n", numOpsExecuted);
+        printf("[STATS]\tinstructions executed: %d (%.2f pct)\n", numOpsExecuted, (float)(numOpsExecuted * 100) / emu_Stats.totalProgSz);
         printf("[STATS]\tload:   %d (%.2f pct)\n", emu_Stats.numLoad, (float)(emu_Stats.numLoad * 100) / numOpsExecuted);
         printf("[STATS]\tstore:  %d (%.2f pct)\n", emu_Stats.numStore, (float)(emu_Stats.numStore * 100) / numOpsExecuted);
         printf("[STATS]\tadd:    %d (%.2f pct)\n", emu_Stats.numAdd, (float)(emu_Stats.numAdd * 100) / numOpsExecuted);
