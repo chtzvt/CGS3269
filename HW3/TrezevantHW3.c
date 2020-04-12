@@ -1,3 +1,7 @@
+// Charlton Trezevant - 4383060
+// CGS 3269 - HW 3
+// Spring 2020
+
 #include <stdio.h>
 #include <stdlib.h>
 
