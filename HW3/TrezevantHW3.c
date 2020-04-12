@@ -297,14 +297,14 @@ void emu_printStats(){
         int numOpsExecuted = emu_Stats.numCycles - emu_Stats.numFetchex;
 
         printf("[STATS]\tinstructions executed: %d\n", numOpsExecuted);
-        printf("[STATS]\t\tload:   %d (%.2f pct)\n", emu_Stats.numLoad, (float)(emu_Stats.numLoad * 100) / numOpsExecuted);
-        printf("[STATS]\t\tstore:  %d (%.2f pct)\n", emu_Stats.numStore, (float)(emu_Stats.numStore * 100) / numOpsExecuted);
-        printf("[STATS]\t\tadd:    %d (%.2f pct)\n", emu_Stats.numAdd, (float)(emu_Stats.numAdd * 100) / numOpsExecuted);
-        printf("[STATS]\t\tsub:    %d (%.2f pct)\n", emu_Stats.numSub, (float)(emu_Stats.numSub * 100) / numOpsExecuted);
-        printf("[STATS]\t\tinput:  %d (%.2f pct)\n", emu_Stats.numIn, (float)(emu_Stats.numIn * 100) / numOpsExecuted);
-        printf("[STATS]\t\toutput: %d (%.2f pct)\n", emu_Stats.numOut, (float)(emu_Stats.numOut * 100) / numOpsExecuted);
-        printf("[STATS]\t\tjump:   %d (%.2f pct)\n", emu_Stats.numJump, (float)(emu_Stats.numJump * 100) / numOpsExecuted);
-        printf("[STATS]\t\tskipz:  %d (%.2f pct)\n", emu_Stats.numSkipz, (float)(emu_Stats.numSkipz * 100) / numOpsExecuted);
+        printf("[STATS]\tload:   %d (%.2f pct)\n", emu_Stats.numLoad, (float)(emu_Stats.numLoad * 100) / numOpsExecuted);
+        printf("[STATS]\tstore:  %d (%.2f pct)\n", emu_Stats.numStore, (float)(emu_Stats.numStore * 100) / numOpsExecuted);
+        printf("[STATS]\tadd:    %d (%.2f pct)\n", emu_Stats.numAdd, (float)(emu_Stats.numAdd * 100) / numOpsExecuted);
+        printf("[STATS]\tsub:    %d (%.2f pct)\n", emu_Stats.numSub, (float)(emu_Stats.numSub * 100) / numOpsExecuted);
+        printf("[STATS]\tinput:  %d (%.2f pct)\n", emu_Stats.numIn, (float)(emu_Stats.numIn * 100) / numOpsExecuted);
+        printf("[STATS]\toutput: %d (%.2f pct)\n", emu_Stats.numOut, (float)(emu_Stats.numOut * 100) / numOpsExecuted);
+        printf("[STATS]\tjump:   %d (%.2f pct)\n", emu_Stats.numJump, (float)(emu_Stats.numJump * 100) / numOpsExecuted);
+        printf("[STATS]\tskipz:  %d (%.2f pct)\n", emu_Stats.numSkipz, (float)(emu_Stats.numSkipz * 100) / numOpsExecuted);
 }
 
 /////////////// FETCH/EXECUTE ///////////////
