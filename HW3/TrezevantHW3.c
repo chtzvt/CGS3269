@@ -133,7 +133,7 @@ void emu_loadParseFile(char *filename){
 
         fclose(file);
 
-        printf("[INFO] Loading completed.\n");
+        printf("[INFO] Loading completed\n");
 }
 
 void emu_printState() {
@@ -145,7 +145,7 @@ void emu_printState() {
                 printf("%d", datMem[i]);
 
                 if(i == MAXMEMORYSIZE - 1)
-                        printf("]");
+                        printf("]\n");
                 else
                         printf(", ");
         }
@@ -154,7 +154,7 @@ void emu_printState() {
 void emu_printProgMemDump() {
         int i;
 
-        printf("[EMU] --- Program Memory Dump ---\n[EMU]\tindex | opcode device/address");
+        printf("[EMU] --- Program Memory Dump ---\n[EMU]\tindex | opcode device/address\n");
 
         for (i = 0; i < MAXPROGRAMSIZE; i++) {
 
